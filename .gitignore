@@ -1,0 +1,62 @@
+# OS / IDE 
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+
+# Secrets and Environment
+.env
+.env.*
+secrets/
+*.secret
+kubeconfig
+kubeconfig_*
+*.kubeconfig
+
+# Go 
+/backend/bin/
+*.exe
+*.test
+*.out
+go.work
+go.work.sum
+
+# Node / React
+node_modules/
+dist/
+build/
+coverage/
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.nx/cache
+.nx/workspace-data
+
+# iOS / Xcode
+mobile/**/DerivedData/
+mobile/**/build/
+mobile/**/Pods/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+Config.xcconfig
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+override.tf
+override.tf.json
+
+# ---------- Others ----------
+**/charts/*.tgz
+.venv/
+*.log
+reports/
+screenshots/
