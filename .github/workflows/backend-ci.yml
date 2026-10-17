@@ -1,0 +1,38 @@
+name: backend-ci
+
+on:
+  push:
+    branches: [develop, main]
+    paths: ["backend/**", ".github/workflows/backend-ci.yml"]
+  pull_request:
+    paths: ["backend/**", ".github/workflows/backend-ci.yml"]
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: backend/go.mod
+      - run: go mod tidy   # TODO: replace with `go mod download` once go.sum is committed
+      - run: go vet ./...
+      - run: go test -race -coverprofile=coverage.out ./...
+      - uses: golangci/golangci-lint-action@v8
+        with:
+          working-directory: backend
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/build-push-action@v6
+        with:
+          context: backend
+          push: false
+          tags: flashy-backend:${{ github.sha }}

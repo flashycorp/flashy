@@ -1,0 +1,7 @@
+# kube-prometheus-stack values (Prometheus, Grafana, Alertmanager).
+# Alertmanager examples: samples/monitoring/alertmanager/
+grafana:
+  enabled: true
+  sidecar:
+    dashboards:
+      enabled: true

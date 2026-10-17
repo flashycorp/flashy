@@ -1,16 +1,56 @@
-# React + Vite
+# Flashy — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-клиент Flashy на **React (JavaScript) + Vite**, роутинг — `react-router-dom`, HTTP — `axios`.
 
-Currently, two official plugins are available:
+## Структура
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+frontend/
+├── public/                 # статика, отдаётся как есть
+├── src/
+│   ├── app/                # App.jsx, router.jsx — корень приложения и маршруты
+│   ├── api/                # axios-клиент и обёртки над REST API (client.js)
+│   ├── components/
+│   │   ├── layout/         # Layout, Header, ProtectedRoute
+│   │   └── ui/             # переиспользуемые UI-компоненты (Button, Modal, Card...)
+│   ├── context/            # React-контексты (AuthContext, тема, язык)
+│   ├── features/           # компоненты и хуки по доменам
+│   │   ├── auth/  decks/  cards/  study/  catalog/
+│   │   └── stats/ profile/ admin/ demo/
+│   ├── pages/              # страницы-маршруты (Home, Login, Decks, Study, Admin...)
+│   ├── hooks/              # общие хуки
+│   ├── i18n/               # локализация (uk, en)
+│   ├── styles/             # глобальные стили, светлая/тёмная тема
+│   ├── constants/          # константы, пути маршрутов
+│   ├── utils/              # утилиты
+│   ├── assets/             # картинки, иконки
+│   └── main.jsx            # точка входа
+├── tests/                  # unit-тесты (Jest + React Testing Library)
+├── e2e/                    # e2e-тесты (Playwright)
+├── Dockerfile              # сборка + nginx
+├── nginx.conf              # SPA-fallback, кэширование ассетов
+└── .env.example
+```
 
-## React Compiler
+## Маршруты
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Путь              | Доступ | Страница      |
+|-------------------|--------|---------------|
+| `/`               | Guest  | Home (+ демо) |
+| `/login`, `/register` | Guest | Вход / регистрация (email, Google, QR) |
+| `/catalog`        | Guest  | Публичный каталог колод |
+| `/decks`, `/decks/:deckId` | User | Мои колоды, карточки |
+| `/study/:deckId`  | User   | Тренировка (Картки / Тест / Письмо) |
+| `/stats`          | User   | Прогресс и streak |
+| `/profile`        | User   | Профиль и настройки |
+| `/admin/*`        | Admin  | Пользователи, модерация, поддержка |
 
-## Expanding the ESLint configuration
+## Запуск
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cp .env.example .env
+npm install
+npm run dev        # http://localhost:5173
+npm run build
+npm run lint
+```
