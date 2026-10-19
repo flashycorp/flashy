@@ -1,0 +1,40 @@
+# Local development stack: docker compose up -d
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: flashy
+      POSTGRES_PASSWORD: change-me
+      POSTGRES_DB: flashy
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flashy"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+  backend:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      DATABASE_URL: postgres://flashy:change-me@postgres:5432/flashy?sslmode=disable
+      REDIS_URL: redis://redis:6379/0
+    ports: ["8080:8080"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_started }
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8080/v1
+    ports: ["3000:80"]
+    depends_on: [backend]
+
+volumes:
+  pgdata:

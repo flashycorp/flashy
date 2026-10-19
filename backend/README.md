@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flashy Backend
 
 Монолітний серверний застосунок на Go для сервісу вивчення карток за методом інтервальних повторень (SRS). Обслуговує Web (React JS) і Mobile (React Native) клієнти через єдине REST API по HTTPS.
@@ -53,10 +54,48 @@ flashy-backend/
 ├── api/openapi.yaml              # контракт API для Web/Mobile
 ├── deploy/                       # Dockerfile, docker-compose, k8s
 ├── .github/workflows/ci.yml
+=======
+# Flashy — Backend
+
+REST API сервиса Flashy на **Go + Gin**, PostgreSQL (основная БД) и Redis (кэш, сессии, rate limiting).
+Контракт API описан в [`../docs/swagger.yaml`](../docs/swagger.yaml).
+
+## Структура
+
+```
+backend/
+├── cmd/
+│   ├── api/                # точка входа HTTP API
+│   └── worker/             # фоновые задачи: SRS-напоминания, push (FCM), email
+├── internal/
+│   ├── config/             # загрузка конфигурации из env
+│   ├── server/             # инициализация Gin, роутинг (/health, /v1/...)
+│   ├── middleware/         # auth (session/bearer), CORS, логирование, rate limit
+│   ├── platform/           # инфраструктура: postgres, redis, logger
+│   └── modules/            # бизнес-модули (handler → service → repository + model)
+│       ├── auth/           # регистрация, логин, Google OAuth 2.0, QR-вход
+│       ├── user/           # профиль, пароль, языки изучения
+│       ├── deck/           # колоды пользователя
+│       ├── card/           # карточки
+│       ├── tag/            # теги
+│       ├── study/          # сессии тренировки (Flip / Тест / Письмо)
+│       ├── srs/            # алгоритм интервальных повторений
+│       ├── stats/          # прогресс, streak, статистика
+│       ├── catalog/        # публичный каталог, рейтинг, копирование
+│       ├── importexport/   # экспорт/импорт колод
+│       ├── notification/   # устройства и push-уведомления
+│       ├── admin/          # пользователи, модерация, поддержка, статистика платформы
+│       └── demo/           # демо-тренировка для гостей
+├── pkg/httpx/              # общие HTTP-хелперы (ошибки, пагинация)
+├── migrations/             # SQL-миграции (golang-migrate)
+├── tests/integration/      # интеграционные тесты
+├── Dockerfile
+>>>>>>> 5a1462d (1)
 ├── Makefile
 └── .env.example
 ```
 
+<<<<<<< HEAD
 ## Швидкий старт
 
 ### Створення структури (Linux / macOS)
@@ -147,3 +186,22 @@ migrate-down:
 - ІА-42 Євтушенко Юрій
 - ІА-42 Пінчук Максим
 - ІМ-42 Буханцов Ілля
+=======
+Каждый модуль устроен одинаково:
+
+| Файл            | Ответственность                                  |
+|-----------------|--------------------------------------------------|
+| `handler.go`    | HTTP-слой: разбор запроса, валидация, ответ      |
+| `service.go`    | бизнес-логика                                    |
+| `repository.go` | доступ к PostgreSQL / Redis                      |
+| `model.go`      | доменные сущности и DTO                          |
+
+## Запуск
+
+```bash
+cp .env.example .env
+go mod tidy        # первый раз: подтянуть зависимости и создать go.sum
+make run           # http://localhost:8080/health
+make test
+```
+>>>>>>> 5a1462d (1)

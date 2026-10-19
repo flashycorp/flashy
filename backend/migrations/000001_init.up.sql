@@ -1,0 +1,2 @@
+-- Initial schema: users, decks, cards, tags, reviews, catalog, devices, support tickets.
+-- TODO
