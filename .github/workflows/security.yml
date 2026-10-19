@@ -11,7 +11,7 @@ jobs:
   sast-gosec:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: securego/gosec@v2
         with:
           args: ./backend/...
@@ -20,13 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     container: semgrep/semgrep
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: semgrep scan --config auto --error
 
   sca-govulncheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: golang/govulncheck-action@v1
         with:
           work-dir: backend
@@ -38,7 +38,7 @@ jobs:
       matrix:
         app: [backend, frontend]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: docker build -t flashy-${{ matrix.app }}:scan ${{ matrix.app }}
       - uses: aquasecurity/trivy-action@0.33.1
         with:
