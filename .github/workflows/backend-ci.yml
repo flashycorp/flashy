@@ -22,7 +22,7 @@ jobs:
       - run: go mod tidy   # TODO: replace with `go mod download` once go.sum is committed
       - run: go vet ./...
       - run: go test -race -coverprofile=coverage.out ./...
-      - uses: golangci/golangci-lint-action@v8
+      - uses: golangci/golangci-lint-action@v9
         with:
           working-directory: backend
 
