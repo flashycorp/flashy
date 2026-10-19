@@ -1,54 +1,54 @@
 # Flashy — Mobile
 
-Нативное приложение Flashy для iOS (15+) и Android (10+) на **React Native + Expo** (Expo Router, TypeScript).
-Push-уведомления — Firebase Cloud Messaging. Сборка и публикация — EAS.
+The native Flashy app for iOS (15+) and Android (10+), built with **React Native + Expo** (Expo Router, TypeScript).
+Push notifications use Firebase Cloud Messaging. Builds and publishing go through EAS.
 
-## Структура
+## Structure
 
 ```
 mobile/
-├── app.json                # конфигурация Expo
-├── assets/                 # иконки, splash, изображения
+├── app.json                # Expo configuration
+├── assets/                 # icons, splash, images
 ├── src/
-│   ├── app/                # маршруты Expo Router (каждый файл — экран, _layout.tsx — навигатор)
-│   ├── api/                # REST-клиент (Bearer-токен сессии)
-│   ├── features/           # экраны и компоненты по доменам
-│   │   ├── auth/           # вход, регистрация, Google OAuth
-│   │   ├── qr-login/       # сканирование QR для входа в веб-версию
-│   │   ├── decks/  cards/  # колоды и карточки
-│   │   ├── study/          # тренировка (Flip / Тест / Письмо), оценки Again–Easy
-│   │   ├── catalog/        # публичный каталог
-│   │   ├── stats/          # прогресс, streak
-│   │   └── profile/        # профиль, языки, настройки уведомлений
-│   ├── components/         # общие UI-компоненты (themed-text, themed-view...)
-│   ├── hooks/              # общие хуки (тема и т.п.)
-│   ├── store/              # глобальное состояние (сессия, пользователь)
+│   ├── app/                # Expo Router routes (each file is a screen, _layout.tsx is a navigator)
+│   ├── api/                # REST client (session Bearer token)
+│   ├── features/           # screens and components by domain
+│   │   ├── auth/           # sign in, sign up, Google OAuth
+│   │   ├── qr-login/       # QR scanning to sign in to the web version
+│   │   ├── decks/  cards/  # decks and cards
+│   │   ├── study/          # training (Flip / Quiz / Writing), Again–Easy ratings
+│   │   ├── catalog/        # public catalog
+│   │   ├── stats/          # progress, streak
+│   │   └── profile/        # profile, languages, notification settings
+│   ├── components/         # shared UI components (themed-text, themed-view...)
+│   ├── hooks/              # shared hooks (theme, etc.)
+│   ├── store/              # global state (session, user)
 │   ├── services/
-│   │   └── notifications/  # FCM: регистрация устройства, напоминания
-│   ├── storage/            # локальное хранение токена и прогресса сессии (офлайн)
-│   ├── i18n/               # локализация (uk, en)
-│   ├── constants/          # тема (светлая/тёмная), отступы
+│   │   └── notifications/  # FCM: device registration, reminders
+│   ├── storage/            # local storage for the token and session progress (offline)
+│   ├── i18n/               # localization (uk, en)
+│   ├── constants/          # theme (light/dark), spacing
 │   └── utils/
-├── tests/                  # тесты (Jest)
+├── tests/                  # tests (Jest)
 └── .env.example
 ```
 
-Код, не являющийся маршрутом, держим вне `src/app/`. Экраны пишутся в `src/features/<домен>/screens`,
-а файлы в `src/app/` только реэкспортируют их.
+Code that is not a route is kept outside `src/app/`. Screens are written in `src/features/<domain>/screens`,
+and the files in `src/app/` only re-export them.
 
-## Планируемые маршруты
+## Planned Routes
 
 ```
 src/app/
 ├── _layout.tsx
 ├── (auth)/login.tsx, register.tsx
-├── (tabs)/index.tsx (дашборд), decks.tsx, catalog.tsx, stats.tsx, profile.tsx
+├── (tabs)/index.tsx (dashboard), decks.tsx, catalog.tsx, stats.tsx, profile.tsx
 ├── deck/[deckId].tsx
 ├── study/[deckId].tsx
 └── qr-scan.tsx
 ```
 
-## Запуск
+## Running
 
 ```bash
 cp .env.example .env
@@ -58,4 +58,4 @@ npx expo lint
 npx tsc --noEmit
 ```
 
-Подробнее про правила работы с Expo — в [AGENTS.md](AGENTS.md).
+For more on working with Expo, see [AGENTS.md](AGENTS.md).

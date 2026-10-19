@@ -1,51 +1,51 @@
 # Flashy — Frontend
 
-Веб-клиент Flashy на **React (JavaScript) + Vite**, роутинг — `react-router-dom`, HTTP — `axios`.
+The Flashy web client, built with **React (JavaScript) + Vite**. Routing uses `react-router-dom`, HTTP requests use `axios`.
 
-## Структура
+## Structure
 
 ```
 frontend/
-├── public/                 # статика, отдаётся как есть
+├── public/                 # static assets, served as-is
 ├── src/
-│   ├── app/                # App.jsx, router.jsx — корень приложения и маршруты
-│   ├── api/                # axios-клиент и обёртки над REST API (client.js)
+│   ├── app/                # App.jsx, router.jsx — application root and routes
+│   ├── api/                # axios client and REST API wrappers (client.js)
 │   ├── components/
 │   │   ├── layout/         # Layout, Header, ProtectedRoute
-│   │   └── ui/             # переиспользуемые UI-компоненты (Button, Modal, Card...)
-│   ├── context/            # React-контексты (AuthContext, тема, язык)
-│   ├── features/           # компоненты и хуки по доменам
+│   │   └── ui/             # reusable UI components (Button, Modal, Card...)
+│   ├── context/            # React contexts (AuthContext, theme, language)
+│   ├── features/           # components and hooks by domain
 │   │   ├── auth/  decks/  cards/  study/  catalog/
 │   │   └── stats/ profile/ admin/ demo/
-│   ├── pages/              # страницы-маршруты (Home, Login, Decks, Study, Admin...)
-│   ├── hooks/              # общие хуки
-│   ├── i18n/               # локализация (uk, en)
-│   ├── styles/             # глобальные стили, светлая/тёмная тема
-│   ├── constants/          # константы, пути маршрутов
-│   ├── utils/              # утилиты
-│   ├── assets/             # картинки, иконки
-│   └── main.jsx            # точка входа
-├── tests/                  # unit-тесты (Jest + React Testing Library)
-├── e2e/                    # e2e-тесты (Playwright)
-├── Dockerfile              # сборка + nginx
-├── nginx.conf              # SPA-fallback, кэширование ассетов
+│   ├── pages/              # route pages (Home, Login, Decks, Study, Admin...)
+│   ├── hooks/              # shared hooks
+│   ├── i18n/               # localization (uk, en)
+│   ├── styles/             # global styles, light/dark theme
+│   ├── constants/          # constants, route paths
+│   ├── utils/              # utilities
+│   ├── assets/             # images, icons
+│   └── main.jsx            # entry point
+├── tests/                  # unit tests (Jest + React Testing Library)
+├── e2e/                    # e2e tests (Playwright)
+├── Dockerfile              # build + nginx
+├── nginx.conf              # SPA fallback, asset caching
 └── .env.example
 ```
 
-## Маршруты
+## Routes
 
-| Путь              | Доступ | Страница      |
+| Path              | Access | Page          |
 |-------------------|--------|---------------|
-| `/`               | Guest  | Home (+ демо) |
-| `/login`, `/register` | Guest | Вход / регистрация (email, Google, QR) |
-| `/catalog`        | Guest  | Публичный каталог колод |
-| `/decks`, `/decks/:deckId` | User | Мои колоды, карточки |
-| `/study/:deckId`  | User   | Тренировка (Картки / Тест / Письмо) |
-| `/stats`          | User   | Прогресс и streak |
-| `/profile`        | User   | Профиль и настройки |
-| `/admin/*`        | Admin  | Пользователи, модерация, поддержка |
+| `/`               | Guest  | Home (+ demo) |
+| `/login`, `/register` | Guest | Sign in / sign up (email, Google, QR) |
+| `/catalog`        | Guest  | Public deck catalog |
+| `/decks`, `/decks/:deckId` | User | My decks, cards |
+| `/study/:deckId`  | User   | Training (Cards / Quiz / Writing) |
+| `/stats`          | User   | Progress and streak |
+| `/profile`        | User   | Profile and settings |
+| `/admin/*`        | Admin  | Users, moderation, support |
 
-## Запуск
+## Running
 
 ```bash
 cp .env.example .env
