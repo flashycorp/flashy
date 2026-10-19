@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t flashy-${{ matrix.app }}:scan ${{ matrix.app }}
-      - uses: aquasecurity/trivy-action@0.33.1
+      - uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: flashy-${{ matrix.app }}:scan
           severity: CRITICAL,HIGH
