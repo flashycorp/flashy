@@ -1,0 +1,40 @@
+name: deploy
+
+# Build images, push to ECR and roll out to EKS via helmfile.
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        options: [dev, staging, production]
+        default: dev
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: eu-central-1
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: ecr
+      - name: Build & push images
+        run: |
+          for app in backend frontend; do
+            docker build -t ${{ steps.ecr.outputs.registry }}/flashy-$app:${{ github.sha }} $app
+            docker push ${{ steps.ecr.outputs.registry }}/flashy-$app:${{ github.sha }}
+          done
+      - name: Deploy
+        run: |
+          aws eks update-kubeconfig --name flashy-${{ inputs.environment }}
+          # TODO: install helmfile, then:
+          # helmfile -f deploy/helmfile.yaml -e ${{ inputs.environment }} apply \
+          #   --set imageRegistry=${{ steps.ecr.outputs.registry }} \
+          #   --set backend.tag=${{ github.sha }} --set frontend.tag=${{ github.sha }}

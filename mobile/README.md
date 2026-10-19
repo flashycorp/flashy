@@ -1,56 +1,61 @@
-# Welcome to your Expo app 👋
+# Flashy — Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Нативное приложение Flashy для iOS (15+) и Android (10+) на **React Native + Expo** (Expo Router, TypeScript).
+Push-уведомления — Firebase Cloud Messaging. Сборка и публикация — EAS.
 
-## Get started
+## Структура
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+mobile/
+├── app.json                # конфигурация Expo
+├── assets/                 # иконки, splash, изображения
+├── src/
+│   ├── app/                # маршруты Expo Router (каждый файл — экран, _layout.tsx — навигатор)
+│   ├── api/                # REST-клиент (Bearer-токен сессии)
+│   ├── features/           # экраны и компоненты по доменам
+│   │   ├── auth/           # вход, регистрация, Google OAuth
+│   │   ├── qr-login/       # сканирование QR для входа в веб-версию
+│   │   ├── decks/  cards/  # колоды и карточки
+│   │   ├── study/          # тренировка (Flip / Тест / Письмо), оценки Again–Easy
+│   │   ├── catalog/        # публичный каталог
+│   │   ├── stats/          # прогресс, streak
+│   │   └── profile/        # профиль, языки, настройки уведомлений
+│   ├── components/         # общие UI-компоненты (themed-text, themed-view...)
+│   ├── hooks/              # общие хуки (тема и т.п.)
+│   ├── store/              # глобальное состояние (сессия, пользователь)
+│   ├── services/
+│   │   └── notifications/  # FCM: регистрация устройства, напоминания
+│   ├── storage/            # локальное хранение токена и прогресса сессии (офлайн)
+│   ├── i18n/               # локализация (uk, en)
+│   ├── constants/          # тема (светлая/тёмная), отступы
+│   └── utils/
+├── tests/                  # тесты (Jest)
+└── .env.example
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Код, не являющийся маршрутом, держим вне `src/app/`. Экраны пишутся в `src/features/<домен>/screens`,
+а файлы в `src/app/` только реэкспортируют их.
 
-### Other setup steps
+## Планируемые маршруты
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```
+src/app/
+├── _layout.tsx
+├── (auth)/login.tsx, register.tsx
+├── (tabs)/index.tsx (дашборд), decks.tsx, catalog.tsx, stats.tsx, profile.tsx
+├── deck/[deckId].tsx
+├── study/[deckId].tsx
+└── qr-scan.tsx
+```
 
-## Learn more
+## Запуск
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+cp .env.example .env
+npm install
+npx expo start
+npx expo lint
+npx tsc --noEmit
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Подробнее про правила работы с Expo — в [AGENTS.md](AGENTS.md).
