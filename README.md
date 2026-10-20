@@ -111,5 +111,3 @@ Tasks are distributed by role and area of the codebase. Each member works in the
 | Yurii    | Full-stack developer                  | Data layer, API, mobile   | Database schema and migrations, OpenAPI contract, SRS algorithm research, React Native (Expo) app setup         | `backend/migrations/`, `docs/`, `mobile/` |
 | Illia    | Backend developer                     | Backend (Go + Gin)        | Go service skeleton, registration, login and sessions, business logic, REST API                                  | `backend/` |
 | Maksym   | Frontend developer / UI designer      | Web client, design        | Figma design system, React skeleton and routing, authentication UI, study screens                                | `frontend/` |
-
-**How the work is split:** tasks are assigned by role and expertise, estimated in story points by the whole team (planning poker), and tracked on the Jira board (To Do → In Progress → Done).
