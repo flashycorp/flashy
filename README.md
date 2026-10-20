@@ -100,3 +100,14 @@ Local Kubernetes:
 ## API
 
 Documentation: [`docs/swagger.yaml`](docs/swagger.yaml) (OpenAPI 3). Base path: `/v1`.
+
+## Team and Responsibilities
+
+Tasks are distributed by role and area of the codebase. Each member works in their own branches and merges through pull requests with code review.
+
+| Member   | Role                                  | Area                      | Responsibilities                                                                                                | Directories |
+|----------|---------------------------------------|---------------------------|-----------------------------------------------------------------------------------------------------------------|-------------|
+| Arseniy  | DevOps / Project Manager / DevSecOps  | Infrastructure, process   | Git workflow and branch rules, Docker and docker-compose, CI/CD (GitHub Actions), Kubernetes/Terraform, security scanning, Jira backlog and sprint planning | `deploy/`, `terraform/`, `.github/`, `scripts/`, `docker-compose.yml` |
+| Yurii    | Full-stack developer                  | Data layer, API, mobile   | Database schema and migrations, OpenAPI contract, SRS algorithm research, React Native (Expo) app setup         | `backend/migrations/`, `docs/`, `mobile/` |
+| Illia    | Backend developer                     | Backend (Go + Gin)        | Go service skeleton, registration, login and sessions, business logic, REST API                                  | `backend/` |
+| Maksym   | Frontend developer / UI designer      | Web client, design        | Figma design system, React skeleton and routing, authentication UI, study screens                                | `frontend/` |
