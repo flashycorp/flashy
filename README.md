@@ -38,36 +38,38 @@
 
 ```
 flashy/
-├── backend/                    # REST API (Go + Gin)          → backend/README.md
-│   ├── cmd/                    #   api, worker
-│   ├── internal/               #   config, server, middleware, platform, modules/*
-│   ├── migrations/             #   SQL migrations
+├── backend/                        # REST API (Go + Gin) — source code
+│   ├── cmd/
+│   │   ├── api/                    #   HTTP server entry point
+│   │   └── worker/                 #   background worker (reminders)
+│   ├── internal/
+│   │   ├── config/                 #   configuration loading
+│   │   ├── server/                 #   server setup, routes
+│   │   ├── middleware/             #   auth, cors, ratelimit, logger
+│   │   ├── platform/               #   postgres, redis, logger
+│   │   └── modules/                #   domain modules (handler/service/repository/model)
+│   │       ├── auth/  user/
+│   │       ├── deck/  card/  tag/
+│   │       ├── study/  srs/  stats/
+│   │       └── catalog/  importexport/  demo/  notification/  admin/
+│   ├── migrations/                 #   SQL database migrations
+│   ├── tests/integration/          #   integration tests
 │   └── Dockerfile
-├── frontend/                   # Web client (React + Vite)    → frontend/README.md
-│   ├── src/                    #   app, api, components, features, pages, i18n, styles
-│   ├── e2e/                    #   Playwright
-│   ├── Dockerfile, nginx.conf
-├── mobile/                     # iOS/Android (React Native + Expo) → mobile/README.md
-│   ├── src/                    #   app (routes), api, features, services, storage, i18n
-│   └── app.json
-├── deploy/                     # Kubernetes deployment
-│   ├── helm/flashy/            #   Helm chart: backend, frontend, ingress, HPA
-│   ├── helmfile.yaml           #   ingress-nginx + kube-prometheus-stack + flashy
-│   ├── monitoring/             #   Prometheus / Grafana values and dashboards
-│   └── kind/                   #   local kind cluster
-├── terraform/                  # AWS infrastructure
-│   ├── eks/                    #   EKS cluster
-│   ├── ecs/, apprunner/        #   alternative deployment options
-│   └── libs/                   #   modules: vpc, rds, elasticache, ecr
-├── samples/monitoring/         # Alertmanager configuration examples
-├── docs/swagger.yaml           # OpenAPI specification
-├── scripts/                    # helper scripts
-├── .github/
-│   ├── workflows/              # backend-ci, frontend-ci, mobile-ci, security, deploy
-│   └── dependabot.yml
-├── docker-compose.yml          # local stack: postgres, redis, backend, frontend
-├── Tiltfile                    # dev loop in local k8s (kind + tilt)
-└── .mise.toml                  # CLI tool versions
+├── frontend/                       # web client (React + Vite)
+│   ├── src/                        #   app, api, components, context, features, pages, i18n
+│   ├── tests/                      #   unit tests (Jest + RTL)
+│   ├── e2e/                        #   e2e tests (Playwright)
+│   └── Dockerfile, nginx.conf
+├── mobile/                         # iOS/Android (React Native + Expo)
+│   ├── src/                        #   app (routes), api, features, services, storage
+│   └── tests/                      #   tests (Jest)
+├── docs/swagger.yaml               # documentation: OpenAPI specification
+├── deploy/                         # Helm chart, Helmfile, monitoring, kind
+├── terraform/                      # AWS infrastructure
+├── scripts/                        # helper scripts
+├── .github/workflows/              # CI/CD: backend, frontend, mobile, security, deploy
+├── docker-compose.yml              # local stack
+└── README.md
 ```
 
 ## Quick Start
